@@ -1,0 +1,46 @@
+query GetSearchResults(
+    $query: String!
+    $page: BrowsePageInput
+    $sort: BrowseSortInput
+  ) {
+    browse(query: $query, page: $page, sort: $sort) {
+      categories {
+        id
+        name
+        count
+      }
+      results {
+        edges {
+          objectId
+          node {
+            ... on Product {
+              id
+              urlKey
+              primaryTitle
+              secondaryTitle
+              brand
+              productCategory
+            }
+            ... on Variant {
+              id
+              product {
+                id
+                urlKey
+                primaryTitle
+                secondaryTitle
+                brand
+                productCategory
+              }
+            }
+          }
+        }
+        pageInfo {
+          total
+        }
+      }
+      sort {
+        id
+        order
+      }
+    }
+  }
