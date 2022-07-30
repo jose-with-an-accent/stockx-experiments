@@ -1,7 +1,4 @@
-import { gql, GraphQLClient, request } from 'graphql-request'
-import fetchCookie from 'fetch-cookie';
-import nodeFetch from 'node-fetch';
-
+import { gql, GraphQLClient, request } from 'graphql-request';
 const endpoint = 'https://stockx.com/api/p/e';
 
 const searchQuery = gql``;
@@ -31,7 +28,8 @@ const options = {
             await productSearch(process.argv[3]);
             break;
         case "product":
-            productDetails(process.argv[3]);
+            await productDetails(process.argv[3]);
+            break;
 
     }
   }
@@ -42,7 +40,7 @@ const options = {
 
   async function productDetails(id) {
     const data = await gqlClient.rawRequest(productDetailsQuery, {id: id, currencyCode: options.currency, countryCode: options.country});
-    console.log(JSON.stringify(data.data.market.bidAskData.lowestAsk));
+    console.log(JSON.stringify(data.data));
 
   }
 
