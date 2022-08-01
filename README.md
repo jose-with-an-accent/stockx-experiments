@@ -1,16 +1,18 @@
-# unofficial StockX read-only API experiments
+# StockX GraphQL API
 
 *Updated 07/29/2022* - Notice: it's still under development so the gql queries might have to be moved inline to work.
 
 This is a repository containing basic information on how to use the StockX API. As far as I know, it can be accesed without a cookie or specific authentication, but CloudFlare might control access to it depending on whether the main page has been visited, or many requests have been sent.
+# Why
+A node-package that was supposed to work with their API wasn't working, and I noticed that their developers had switched to a gQL system instead of the JSON one.
 
 **The graphQL endpoint is https://stockx.com/api/p/e**. 
 
 # How the API was obtained
-All of the portions were data-mined from the website, with a process similar to [this YouTube video](https://www.youtube.com/watch?v=DqtlR0y0suo). Queries were taken from the payload tab, newlines replaced, and then prettified with a simple online tool.
+All of the portions were data-mined from the website, with a process similar to [this YouTube video](https://www.youtube.com/watch?v=DqtlR0y0suo). Queries were taken from the payload tab on the web inspector, newlines replaced, and then prettified with a simple online tool.
 
 # Command-line usage
-The index.js script included in this repository contains two functions - productSearch and productDetails. These are self-explanatory; ```node index.js search *term*``` brings up a JSON array of products matching the search term, as well as a bunch of info. ```node index.js product *id*``` shows information on the specific product's ID.
+The index.js script included in this repository contains two functions - productSearch and productDetails. These are self-explanatory; ```node index.js search *term*``` brings up a JSON array of products matching the search term, as well as a bunch of info. ```node index.js product *id*``` shows information on the specific product's ID. Product Details was not tested and may not work yet.
 
 # Using the gQL schema
 ## What is graphQL?
@@ -21,11 +23,11 @@ media {
     thumbURL
 }
 ```
-anywhere near line 30 on the search page. There's a lot of generic gQL info in the project's website [here](https://graphql.org/) if you need information.
+anywhere near line 30 on the search page. You can essentially pick and choose what you want and what you don't. There's a lot of generic gQL info in the project's website [here](https://graphql.org/) if you need information.
 
 ## Four Simple Steps to Using their API!
 
-1. Create a graphQL client with the above URL. The nodeJS example uses ```graphql-request```, and lines 17 to 25 are examples of these.
+1. Create a graphQL client with the above URL. The nodeJS example uses ```graphql-request```, and lines 17 to 25 are examples of these, but other clients like Apollo may be more well-suited.
 2. Add the query. Line 6 is where the search query would be at if it weren't in a separate file.
 3. Call ```await gqlClient.rawRequest``` and pass the search query, as well as variables (required ones should be on the .gql files next to the *query* word). 
 4. Consume the data in whatever way's needed. 
